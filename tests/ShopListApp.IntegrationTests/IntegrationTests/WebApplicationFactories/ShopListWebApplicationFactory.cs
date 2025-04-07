@@ -4,33 +4,26 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Presentation;
-using ShopListApp;
-using ShopListApp.Infrastructure.Database.Context;
-using ShopListAppTests.Stubs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ShopListApp.API;
+using ShopListApp.Infrastructure.Database;
+using ShopListApp.TestUtilities.Stubs;
 
-namespace ShopListAppTests.IntegrationTests.WebApplicationFactories
+namespace ShopListApp.IntegrationTests.IntegrationTests.WebApplicationFactories;
+
+public class ShopListWebApplicationFactory : WebApplicationFactory<Program>
 {
-    public class ShopListWebApplicationFactory : WebApplicationFactory<Program>
+    protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        builder.ConfigureTestServices(services =>
         {
-            builder.ConfigureTestServices(services =>
-            {
-                services.RemoveAll<DbContextOptions<ShopListDbContext>>();
-                services.RemoveAll<ShopListDbContext>();
+            services.RemoveAll<DbContextOptions<ShopListDbContext>>();
+            services.RemoveAll<ShopListDbContext>();
 
-                services.AddDbContext<TestDbContext>(options =>
-                                   options.UseInMemoryDatabase("ShopListTestDb"));
+            services.AddDbContext<TestDbContext>(options =>
+                               options.UseInMemoryDatabase("ShopListTestDb"));
 
-                services.AddScoped<ShopListDbContext, TestDbContext>();
+            services.AddScoped<ShopListDbContext, TestDbContext>();
 
-            });
-        }
+        });
     }
 }

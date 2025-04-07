@@ -10,7 +10,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.72" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="8.0.14" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.14" />
@@ -18,9 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShopListApp.Application\ShopListApp.Application.csproj" />
-    <ProjectReference Include="..\ShopListApp.Core\ShopListApp.Core.csproj" />
-    <ProjectReference Include="..\ShopListApp.Infrastructure\ShopListApp.Infrastructure.csproj" />
+    <ProjectReference Include="..\ShopListApp\ShopListApp.csproj" />
   </ItemGroup>
 
 </Project>
