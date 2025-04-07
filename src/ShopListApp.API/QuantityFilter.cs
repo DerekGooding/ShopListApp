@@ -6,7 +6,7 @@ namespace ShopListApp.API;
 public class QuantityFilter : ActionFilterAttribute
 {
     public override void OnActionExecuting(ActionExecutingContext context)
-    {   
+    {
         if (context.ActionArguments.TryGetValue("quantity", out var value) && value is int)
         {
             var quantity = (int)value;

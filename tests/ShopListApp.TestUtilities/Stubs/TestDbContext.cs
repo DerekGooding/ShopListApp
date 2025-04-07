@@ -4,12 +4,8 @@ using ShopListApp.Models;
 
 namespace ShopListApp.TestUtilities.Stubs;
 
-public class TestDbContext : ShopListDbContext
+public class TestDbContext(DbContextOptions<TestDbContext> options) : ShopListDbContext(options)
 {
-    public TestDbContext(DbContextOptions<TestDbContext> options) : base(options)
-    {
-    }
-
     protected override void SeedData(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>().HasData(

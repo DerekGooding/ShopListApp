@@ -5,13 +5,9 @@ using ShopListApp.Models;
 
 namespace ShopListApp.Infrastructure.Repositories;
 
-public class ShopListRepository : IShopListRepository
+public class ShopListRepository(ShopListDbContext context) : IShopListRepository
 {
-    private readonly ShopListDbContext _context;
-    public ShopListRepository(ShopListDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ShopListDbContext _context = context;
 
     public async Task AddShopList(ShopList shopList)
     {
@@ -40,13 +36,7 @@ public class ShopListRepository : IShopListRepository
         return true;
     }
 
-    public async Task<ShopList?> GetShopListById(int id)
-    {
-        return await _context.ShopLists.FirstOrDefaultAsync(x => x.Id == id);
-    }
+    public async Task<ShopList?> GetShopListById(int id) => await _context.ShopLists.FirstOrDefaultAsync(x => x.Id == id);
 
-    public async Task<ICollection<ShopList>> GetShopListsByUser(string userId)
-    {
-        return await _context.ShopLists.Where(x => x.UserId == userId).ToListAsync();
-    }
+    public async Task<ICollection<ShopList>> GetShopListsByUser(string userId) => await _context.ShopLists.Where(x => x.UserId == userId).ToListAsync();
 }

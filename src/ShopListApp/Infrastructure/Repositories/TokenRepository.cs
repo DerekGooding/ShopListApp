@@ -5,13 +5,9 @@ using ShopListApp.Models;
 
 namespace ShopListApp.Infrastructure.Repositories;
 
-public class TokenRepository : ITokenRepository
+public class TokenRepository(ShopListDbContext context) : ITokenRepository
 {
-    private readonly ShopListDbContext _context;
-    public TokenRepository(ShopListDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ShopListDbContext _context = context;
 
     public async Task<bool> AddToken(Token token)
     {
@@ -26,8 +22,5 @@ public class TokenRepository : ITokenRepository
         return true;
     }
 
-    public async Task<Token?> GetToken(string refreshToken)
-    { 
-        return await _context.Tokens.FirstOrDefaultAsync(x => x.RefreshTokenHash == refreshToken && x.ExpirationDate > DateTime.Now && !x.IsRevoked);
-    }
+    public async Task<Token?> GetToken(string refreshToken) => await _context.Tokens.FirstOrDefaultAsync(x => x.RefreshTokenHash == refreshToken && x.ExpirationDate > DateTime.Now && !x.IsRevoked);
 }

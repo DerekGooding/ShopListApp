@@ -6,23 +6,17 @@ using ShopListApp.Interfaces.StoreObserver;
 
 namespace ShopListApp.Infrastructure;
 
-public class StorePublisher : IStorePublisher
+public class StorePublisher(IHtmlFetcher<HtmlNode, HtmlDocument> htmlFetcher,
+    IProductRepository productRepository,
+    ICategoryRepository categoryRepository,
+    IStoreRepository storeRepository) : IStorePublisher
 {
     private List<IStoreSubscriber> _subscribers = new List<IStoreSubscriber>();
-    private readonly IHtmlFetcher<HtmlNode, HtmlDocument> _htmlFetcher;
-    private readonly IProductRepository _productRepository;
-    private readonly ICategoryRepository _categoryRepository;
-    private readonly IStoreRepository _storeRepository;
-    public StorePublisher(IHtmlFetcher<HtmlNode, HtmlDocument> htmlFetcher, 
-        IProductRepository productRepository,
-        ICategoryRepository categoryRepository,
-        IStoreRepository storeRepository)
-    {
-        _productRepository = productRepository;
-        _categoryRepository = categoryRepository;
-        _storeRepository = storeRepository;
-        _htmlFetcher = htmlFetcher;
-    }
+    private readonly IHtmlFetcher<HtmlNode, HtmlDocument> _htmlFetcher = htmlFetcher;
+    private readonly IProductRepository _productRepository = productRepository;
+    private readonly ICategoryRepository _categoryRepository = categoryRepository;
+    private readonly IStoreRepository _storeRepository = storeRepository;
+
     public async Task Notify()
     {
         foreach (var subscriber in _subscribers)

@@ -4,13 +4,10 @@ using ShopListApp.Models;
 
 namespace ShopListApp.Infrastructure.Loggers;
 
-public class ShopListLogger : IDbLogger<ShopList>
+public class ShopListLogger(ShopListDbContext context) : IDbLogger<ShopList>
 {
-    private readonly ShopListDbContext _context;
-    public ShopListLogger(ShopListDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ShopListDbContext _context = context;
+
     public async Task Log(Operation operation, ShopList loggedObject)
     {
         var log = new ShopListLog

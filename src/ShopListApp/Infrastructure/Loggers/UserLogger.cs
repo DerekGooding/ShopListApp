@@ -4,13 +4,10 @@ using ShopListApp.Models;
 
 namespace ShopListApp.Infrastructure.Loggers;
 
-public class UserLogger : IDbLogger<UserDto>
+public class UserLogger(ShopListDbContext context) : IDbLogger<UserDto>
 {
-    private readonly ShopListDbContext _context;
-    public UserLogger(ShopListDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ShopListDbContext _context = context;
+
     public async Task Log(Operation operation, UserDto loggedObject)
     {
         var log = new UserLog

@@ -14,8 +14,5 @@ public class ParsedProductComparer : IEqualityComparer<ParseProductCommand>
                x.StoreId == y.StoreId;
     }
 
-    public int GetHashCode(ParseProductCommand obj)
-    {
-        return HashCode.Combine(obj.Name, obj.Price, obj.CategoryName, obj.ImageUrl, obj.StoreId);
-    }
+    public int GetHashCode(ParseProductCommand obj) => HashCode.Combine(obj.Name, obj.Price, obj.CategoryName, obj.ImageUrl, obj.StoreId);
 }

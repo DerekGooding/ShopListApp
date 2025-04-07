@@ -7,20 +7,13 @@ using ShopListApp.Responses;
 
 namespace ShopListApp.Application.Services;
 
-public class ProductService : IProductService
+public class ProductService(IProductRepository productRepository, IStoreRepository storeRepository,
+    ICategoryRepository categoryRepository, IStorePublisher storePublisher) : IProductService
 {
-    private readonly IStorePublisher _storePublisher;
-    private readonly IProductRepository _productRepository;
-    private readonly IStoreRepository _storeRepository;
-    private readonly ICategoryRepository _categoryRepository;
-    public ProductService(IProductRepository productRepository, IStoreRepository storeRepository, 
-        ICategoryRepository categoryRepository, IStorePublisher storePublisher)
-    {
-        _storePublisher = storePublisher;
-        _productRepository = productRepository;
-        _storeRepository = storeRepository;
-        _categoryRepository = categoryRepository;
-    }
+    private readonly IStorePublisher _storePublisher = storePublisher;
+    private readonly IProductRepository _productRepository = productRepository;
+    private readonly IStoreRepository _storeRepository = storeRepository;
+    private readonly ICategoryRepository _categoryRepository = categoryRepository;
 
     public async Task<ICollection<ProductResponse>> GetAllProducts()
     {

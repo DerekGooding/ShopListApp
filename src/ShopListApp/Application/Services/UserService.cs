@@ -9,15 +9,10 @@ using ShopListApp.Responses;
 
 namespace ShopListApp.Application.Services;
 
-public class UserService : IUserService
+public class UserService(IDbLogger<UserDto> logger, IUserManager userManager) : IUserService
 {
-    private IDbLogger<UserDto> _logger;
-    private IUserManager _userManager;
-    public UserService(IDbLogger<UserDto> logger, IUserManager userManager)
-    {
-        _logger = logger;
-        _userManager = userManager;
-    }
+    private IDbLogger<UserDto> _logger = logger;
+    private IUserManager _userManager = userManager;
 
     public async Task CreateUser(RegisterUserCommand cmd)
     {

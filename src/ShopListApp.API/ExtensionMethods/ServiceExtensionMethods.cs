@@ -65,10 +65,7 @@ public static class ServiceExtensionMethods
         services.AddHttpClient();
     }
 
-    public static void AddStoreObserver(this IServiceCollection services)
-    {
-        services.AddTransient<IStorePublisher, StorePublisher>();
-    }
+    public static void AddStoreObserver(this IServiceCollection services) => services.AddTransient<IStorePublisher, StorePublisher>();
 
     public static void AddIdentityDbContext(this IServiceCollection services, IConfiguration configuration)
     {
@@ -83,8 +80,7 @@ public static class ServiceExtensionMethods
     }
 
     public static void AddJwtBearer(this IServiceCollection services, IConfiguration configuration)
-    {
-        services.AddAuthentication(options =>
+        => services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -106,11 +102,9 @@ public static class ServiceExtensionMethods
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
             };
         });
-    }
 
     public static void AddSwaggerGenWithAuthorization(this IServiceCollection services)
-    {
-        services.AddSwaggerGen(x =>
+        => services.AddSwaggerGen(x =>
         {
             var security = new OpenApiSecurityScheme
             {
@@ -129,7 +123,6 @@ public static class ServiceExtensionMethods
             x.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {{security, Array.Empty<string>()}});
         });
-    }
 
     public static void AddAuthorizationWithHandlers(this IServiceCollection services)
     {

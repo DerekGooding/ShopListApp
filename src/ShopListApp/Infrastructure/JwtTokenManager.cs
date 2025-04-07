@@ -8,13 +8,10 @@ using System.Text;
 
 namespace ShopListApp.Infrastructure;
 
-public class JwtTokenManager : ITokenManager
+public class JwtTokenManager(IConfiguration config) : ITokenManager
 {
-    private readonly IConfiguration _config;
-    public JwtTokenManager(IConfiguration config)
-    {
-        _config = config;
-    }
+    private readonly IConfiguration _config = config;
+
     public string GenerateAccessToken(UserDto user)
     {
         var tokenConfig = _config.GetSection("TokenConfiguration");

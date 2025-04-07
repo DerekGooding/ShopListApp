@@ -10,15 +10,10 @@ namespace ShopListApp.API.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/shoplist")]
-public class ShopListController : ControllerBase
+public class ShopListController(IShopListService shopListService, IAuthorizationService authorizationService) : ControllerBase
 {
-    private readonly IShopListService _shopListService;
-    private readonly IAuthorizationService _authorizationService;
-    public ShopListController(IShopListService shopListService, IAuthorizationService authorizationService)
-    {
-        _shopListService = shopListService;
-        _authorizationService = authorizationService;
-    }
+    private readonly IShopListService _shopListService = shopListService;
+    private readonly IAuthorizationService _authorizationService = authorizationService;
 
     [HttpPost("create")]
     public async Task<IActionResult> CreateShopList([FromBody] CreateShopListCommand cmd)
@@ -65,8 +60,7 @@ public class ShopListController : ControllerBase
     {
         var shopList = await _shopListService.GetShopListById(shopListId);
         var result = await _authorizationService.AuthorizeAsync(User, shopList, "ShopListOwnerPolicy");
-        if (!result.Succeeded) return Forbid();
-        return Ok(shopList);
+        return !result.Succeeded ? Forbid() : Ok(shopList);
     }
 
     [HttpGet("get-all")]

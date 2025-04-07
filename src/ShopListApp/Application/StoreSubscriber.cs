@@ -7,19 +7,13 @@ using ShopListApp.Models;
 
 namespace ShopListApp.Application;
 
-public class StoreSubscriber : IStoreSubscriber
+public class StoreSubscriber(IParser parser, IProductRepository productRepository, ICategoryRepository categoryRepository, IStoreRepository storeRepository) : IStoreSubscriber
 {
-    private readonly IParser _parser;
-    private readonly IProductRepository _productRepository;
-    private readonly ICategoryRepository _categoryRepository;
-    private readonly IStoreRepository _storeRepository;
-    public StoreSubscriber(IParser parser, IProductRepository productRepository, ICategoryRepository categoryRepository, IStoreRepository storeRepository)
-    {
-        _parser = parser;
-        _productRepository = productRepository;
-        _categoryRepository = categoryRepository;
-        _storeRepository = storeRepository;
-    }
+    private readonly IParser _parser = parser;
+    private readonly IProductRepository _productRepository = productRepository;
+    private readonly ICategoryRepository _categoryRepository = categoryRepository;
+    private readonly IStoreRepository _storeRepository = storeRepository;
+
     public async Task Update()
     {
         var productsForDeletion = new HashSet<int>();

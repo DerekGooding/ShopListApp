@@ -9,22 +9,15 @@ using ShopListApp.Responses;
 
 namespace ShopListApp.Application.Services;
 
-public class AuthService : IAuthService
+public class AuthService(IUserManager userManager,
+    IDbLogger<UserDto> logger,
+    ITokenManager tokenManager,
+    ITokenRepository tokenRepository) : IAuthService
 {
-    private IUserManager _userManager;
-    private IDbLogger<UserDto> _logger;
-    private ITokenManager _tokenManager;
-    private ITokenRepository _tokenRepository;
-    public AuthService(IUserManager userManager, 
-        IDbLogger<UserDto> logger,
-        ITokenManager tokenManager, 
-        ITokenRepository tokenRepository)
-    {
-        _userManager = userManager;
-        _logger = logger;
-        _tokenManager = tokenManager;
-        _tokenRepository = tokenRepository;
-    }
+    private IUserManager _userManager = userManager;
+    private IDbLogger<UserDto> _logger = logger;
+    private ITokenManager _tokenManager = tokenManager;
+    private ITokenRepository _tokenRepository = tokenRepository;
 
     public async Task<LoginRegisterResponse> RegisterUser(RegisterUserCommand cmd)
     {

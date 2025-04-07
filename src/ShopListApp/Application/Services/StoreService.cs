@@ -5,13 +5,9 @@ using ShopListApp.Responses;
 
 namespace ShopListApp.Application.Services;
 
-public class StoreService : IStoreService
+public class StoreService(IStoreRepository storeRepository) : IStoreService
 {
-    private IStoreRepository _storeRepository;
-    public StoreService(IStoreRepository storeRepository)
-    {
-        _storeRepository = storeRepository;
-    }
+    private IStoreRepository _storeRepository = storeRepository;
 
     public async Task<ICollection<StoreResponse>> GetStores()
     {

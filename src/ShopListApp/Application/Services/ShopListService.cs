@@ -10,24 +10,15 @@ using ShopListApp.Responses;
 
 namespace ShopListApp.Application.Services;
 
-public class ShopListService : IShopListService
+public class ShopListService(IShopListRepository shopListRepository, IShopListProductRepository shopListProductRepository,
+                        IProductRepository productRepository, IUserManager userManager,
+                        IDbLogger<ShopList> logger) : IShopListService
 {
-    private readonly IShopListRepository _shopListRepository;
-    private readonly IProductRepository _productRepository;
-    private readonly IShopListProductRepository _shopListProductRepository;
-    private readonly IDbLogger<ShopList> _logger;
-    private readonly IUserManager _userManager;
-
-    public ShopListService(IShopListRepository shopListRepository, IShopListProductRepository shopListProductRepository,
-                            IProductRepository productRepository, IUserManager userManager,
-                            IDbLogger<ShopList> logger)
-    {
-        _shopListRepository = shopListRepository;
-        _shopListProductRepository = shopListProductRepository;
-        _productRepository = productRepository;
-        _userManager = userManager;
-        _logger = logger;
-    }
+    private readonly IShopListRepository _shopListRepository = shopListRepository;
+    private readonly IProductRepository _productRepository = productRepository;
+    private readonly IShopListProductRepository _shopListProductRepository = shopListProductRepository;
+    private readonly IDbLogger<ShopList> _logger = logger;
+    private readonly IUserManager _userManager = userManager;
 
     public async Task AddProductToShopList(int shopListId, int productId, int quantity = 1)
     {

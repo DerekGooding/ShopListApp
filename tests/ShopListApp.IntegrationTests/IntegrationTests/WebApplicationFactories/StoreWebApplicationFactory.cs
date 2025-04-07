@@ -12,18 +12,15 @@ namespace ShopListApp.IntegrationTests.IntegrationTests.WebApplicationFactories;
 
 public class StoreWebApplicationFactory : WebApplicationFactory<Program>
 {
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.ConfigureTestServices(services =>
-        {
-            services.RemoveAll<DbContextOptions<ShopListDbContext>>();
-            services.RemoveAll<ShopListDbContext>();
+    protected override void ConfigureWebHost(IWebHostBuilder builder) => builder.ConfigureTestServices(services =>
+                                                                              {
+                                                                                  services.RemoveAll<DbContextOptions<ShopListDbContext>>();
+                                                                                  services.RemoveAll<ShopListDbContext>();
 
-            services.AddDbContext<TestDbContext>(options =>
-                               options.UseInMemoryDatabase("StoreTestDb"));
+                                                                                  services.AddDbContext<TestDbContext>(options =>
+                                                                                                     options.UseInMemoryDatabase("StoreTestDb"));
 
-            services.AddScoped<ShopListDbContext, TestDbContext>();
+                                                                                  services.AddScoped<ShopListDbContext, TestDbContext>();
 
-        });
-    }
+                                                                              });
 }

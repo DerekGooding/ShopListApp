@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using ShopListApp.Responses;
+﻿using ShopListApp.Responses;
 using System.Security.Claims;
 
 namespace ShopListApp.Infrastructure.Database.Identity.AuthorizationPolicies;

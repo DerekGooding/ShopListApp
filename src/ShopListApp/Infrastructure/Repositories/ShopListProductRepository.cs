@@ -5,13 +5,9 @@ using ShopListApp.Models;
 
 namespace ShopListApp.Infrastructure.Repositories;
 
-public class ShopListProductRepository : IShopListProductRepository
+public class ShopListProductRepository(ShopListDbContext context) : IShopListProductRepository
 {
-    private readonly ShopListDbContext _context;
-    public ShopListProductRepository(ShopListDbContext context)
-    {
-        _context = context;
-    }
+    private readonly ShopListDbContext _context = context;
 
     public async Task AddShopListProduct(ShopListProduct shopListProduct)
     {
@@ -30,21 +26,15 @@ public class ShopListProductRepository : IShopListProductRepository
         return true;
     }
 
-    public async Task<ICollection<Product>> GetProductsForShopList(int shopListId)
-    {
-        return await _context.ShopListProducts.Where(x => x.ShopList.Id == shopListId)
+    public async Task<ICollection<Product>> GetProductsForShopList(int shopListId) => await _context.ShopListProducts.Where(x => x.ShopList.Id == shopListId)
             .Include(x => x.Product)
             .ThenInclude(x => x.Store)
             .Include(x => x.Product)
             .ThenInclude(x => x.Category)
             .Select(x => x.Product).ToListAsync();
-    }
 
-    public async Task<ShopListProduct?> GetShopListProduct(int shopListId, int productId)
-    {
-        return await _context.ShopListProducts.FirstOrDefaultAsync(x => x.ShopList.Id == shopListId
-        && x.Product.Id == productId);
-    }
+    public async Task<ShopListProduct?> GetShopListProduct(int shopListId, int productId) => await _context.ShopListProducts.FirstOrDefaultAsync(x => x.ShopList.Id == shopListId
+                                                                                                  && x.Product.Id == productId);
 
     public async Task<bool> UpdateShopListProductQuantity(int id, int newQuantity)
     {

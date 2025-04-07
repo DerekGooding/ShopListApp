@@ -5,13 +5,9 @@ using ShopListApp.Models;
 
 namespace ShopListApp.Infrastructure.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(ShopListDbContext context) : IProductRepository
 {
-    private ShopListDbContext _context;
-    public ProductRepository(ShopListDbContext context)
-    {
-        _context = context;
-    }
+    private ShopListDbContext _context = context;
 
     public async Task AddProduct(Product product)
     {
@@ -43,11 +39,8 @@ public class ProductRepository : IProductRepository
         return true;
     }
 
-    public async Task<Product?> GetProductById(int id)
-    {
-        return await _context.Products.Include(x => x.Store).Include(x => x.Category)
+    public async Task<Product?> GetProductById(int id) => await _context.Products.Include(x => x.Store).Include(x => x.Category)
             .FirstOrDefaultAsync(x => x.Id == id);
-    }
 
     public async Task<ICollection<Product>> GetProductsByCategoryId(int categoryId)
     {
@@ -67,8 +60,5 @@ public class ProductRepository : IProductRepository
         return products;
     }
 
-    public async Task<Product?> GetProductByName(string name)
-    {
-        return await _context.Products.Include(x => x.Store).Include(x => x.Category).FirstOrDefaultAsync(x => x.Name == name);
-    }
+    public async Task<Product?> GetProductByName(string name) => await _context.Products.Include(x => x.Store).Include(x => x.Category).FirstOrDefaultAsync(x => x.Name == name);
 }

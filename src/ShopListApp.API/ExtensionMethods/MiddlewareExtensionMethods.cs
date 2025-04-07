@@ -2,8 +2,5 @@
 
 public static class MiddlewareExtensionMethods
 {
-    public static IApplicationBuilder UseCustomExceptionHandling(this IApplicationBuilder app)
-    {
-        return app.UseMiddleware<ExceptionHandlerMiddleware>();
-    }
+    public static IApplicationBuilder UseCustomExceptionHandling(this IApplicationBuilder app) => app.UseMiddleware<ExceptionHandlerMiddleware>();
 }

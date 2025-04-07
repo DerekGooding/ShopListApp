@@ -5,32 +5,18 @@ namespace ShopListApp.API.Controllers;
 
 [ApiController]
 [Route("api/product")]
-public class ProductController : ControllerBase
+public class ProductController(IProductService productService) : ControllerBase
 {
-    private IProductService _productService;
-    public ProductController(IProductService productService)
-    {
-        _productService = productService;
-    }
+    private IProductService _productService = productService;
 
     [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllProducts()
-    {
-        return Ok(await _productService.GetAllProducts());
-    }
+    public async Task<IActionResult> GetAllProducts() => Ok(await _productService.GetAllProducts());
 
     [HttpGet("get-by-category/{id}")]
-    public async Task<IActionResult> GetProductsByCategory(int id)
-    {
-        return Ok(await _productService.GetProductsByCategoryId(id));
-    }
-
+    public async Task<IActionResult> GetProductsByCategory(int id) => Ok(await _productService.GetProductsByCategoryId(id));
 
     [HttpGet("get-by-store/{id}")]
-    public async Task<IActionResult> GetProductsByStore(int id)
-    {
-        return Ok(await _productService.GetProductsByStoreId(id));
-    }
+    public async Task<IActionResult> GetProductsByStore(int id) => Ok(await _productService.GetProductsByStoreId(id));
 
     [HttpPatch("refresh")]
     public async Task<IActionResult> RefreshProducts()
@@ -40,14 +26,8 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("get-categories")]
-    public async Task<IActionResult> GetCategories()
-    {
-        return Ok(await _productService.GetCategories());
-    }
+    public async Task<IActionResult> GetCategories() => Ok(await _productService.GetCategories());
 
     [HttpGet("get-product/{id}")]
-    public async Task<IActionResult> GetProductById(int id)
-    {
-        return Ok(await _productService.GetProductById(id));
-    }
+    public async Task<IActionResult> GetProductById(int id) => Ok(await _productService.GetProductById(id));
 }

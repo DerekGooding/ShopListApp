@@ -10,13 +10,9 @@ namespace ShopListApp.API.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/user")]
-public class UserController : ControllerBase
+public class UserController(IUserService userService) : ControllerBase
 {
-    private readonly IUserService _userService;
-    public UserController(IUserService userService)
-    {
-        _userService = userService;
-    }
+    private readonly IUserService _userService = userService;
 
     [HttpPut("update")]
     public async Task<IActionResult> UpdateUser([FromBody]UpdateUserCommand cmd)
